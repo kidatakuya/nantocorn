@@ -1,9 +1,16 @@
 name: Build and deploy
 
 on:
+  # 1. GitHubへのpush時
   push:
     branches:
-      - '**'
+      - "**"
+      # 2. 手動実行
+  workflow_dispatch:
+
+    # 3. microCMSのWebhookからの呼び出し（repository_dispatch）
+  repository_dispatch:
+    types: [microcms-update]
 
 permissions:
   contents: read

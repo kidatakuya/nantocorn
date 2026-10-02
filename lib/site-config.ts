@@ -21,8 +21,9 @@ export const siteConfig = {
 };
 
 export const navItems = [
-  { label: "想い", href: "#about" },
-  { label: "作物", href: "#crops" },
-  { label: "収穫時期", href: "#season" },
-  { label: "お問い合わせ", href: "#contact" },
+  { label: "想い", href: "/#about" },
+  { label: "作物", href: "/#crops" },
+  { label: "収穫時期", href: "/#season" },
+  { label: "ブログ", href: "/#blog" },
+  { label: "お問い合わせ", href: "/#contact" },
 ];

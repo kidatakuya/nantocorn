@@ -1,11 +1,11 @@
-import Image from 'next/image'
-import { SectionLabel } from './section-label'
+import Image from "next/image";
+import { SectionLabel } from "./section-label";
 
 export function Crops() {
   return (
     <section id="crops" className="scroll-mt-16 bg-secondary py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionLabel en="CROPS" ja="育てているもの" />
+        <SectionLabel en="CROPS" ja="育てているも" />
 
         <article className="mt-16 grid items-center gap-10 md:grid-cols-2 md:gap-16">
           <div className="relative aspect-[4/5] overflow-hidden">
@@ -21,8 +21,12 @@ export function Crops() {
             <span className="inline-block bg-accent px-3 py-1 text-xs tracking-widest text-accent-foreground">
               MAIN
             </span>
-            <h3 className="mt-6 font-serif text-3xl font-medium md:text-4xl">とうもろこし</h3>
-            <p className="mt-2 text-xs tracking-[0.3em] text-muted-foreground">SWEET CORN</p>
+            <h3 className="mt-6 font-serif text-3xl font-medium md:text-4xl">
+              とうもろこし
+            </h3>
+            <p className="mt-2 text-xs tracking-[0.3em] text-muted-foreground">
+              SWEET CORN
+            </p>
             <p className="mt-8 leading-loose text-muted-foreground">
               農園の主役。粒がぎっしりと詰まり、かじった瞬間に果汁があふれる甘さが自慢です。
               収穫したその日のうちにお届けできるよう、朝採りにこだわっています。
@@ -52,8 +56,12 @@ export function Crops() {
             />
           </div>
           <div className="md:order-1">
-            <h3 className="font-serif text-3xl font-medium md:text-4xl">玉ねぎ</h3>
-            <p className="mt-2 text-xs tracking-[0.3em] text-muted-foreground">ONION</p>
+            <h3 className="font-serif text-3xl font-medium md:text-4xl">
+              玉ねぎ
+            </h3>
+            <p className="mt-2 text-xs tracking-[0.3em] text-muted-foreground">
+              ONION
+            </p>
             <p className="mt-8 leading-loose text-muted-foreground">
               じっくり育てた玉ねぎは、火を通すととろけるような甘みに。
               しっかりと乾燥させてから出荷するため、保存性にも優れています。
@@ -73,5 +81,5 @@ export function Crops() {
         </article>
       </div>
     </section>
-  )
+  );
 }

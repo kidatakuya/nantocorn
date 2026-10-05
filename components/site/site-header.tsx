@@ -26,7 +26,7 @@ export function SiteHeader() {
             href="#contact"
             className="text-sm tracking-wider underline underline-offset-4 md:hidden"
           >
-            お問い合わせaa
+            お問い合わせ
           </a>
           <a
             href={siteConfig.instagram.url}

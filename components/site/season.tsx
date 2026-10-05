@@ -4,8 +4,12 @@ import { SectionLabel } from "./section-label";
 const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const crops = [
-  { name: "とうもろこし", months: [6, 7, 8], className: "bg-accent" },
-  { name: "玉ねぎ", months: [5, 6], className: "bg-primary" },
+  { name: "とうもろこし", months: [4, 5, 6, 7, 8], className: "bg-accent" },
+  {
+    name: "玉ねぎ",
+    months: [9, 10, 11, 12, 1, 2, 3, 4],
+    className: "bg-primary",
+  },
 ];
 
 export function Season() {

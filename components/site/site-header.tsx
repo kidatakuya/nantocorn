@@ -1,6 +1,6 @@
-import { navItems, siteConfig } from '@/lib/site-config'
-import { Logo } from './logo'
-import { InstagramIcon } from './instagram-icon'
+import { navItems, siteConfig } from "@/lib/site-config";
+import { Logo } from "./logo";
+import { InstagramIcon } from "./instagram-icon";
 
 export function SiteHeader() {
   return (
@@ -12,7 +12,10 @@ export function SiteHeader() {
             <ul className="flex items-center gap-8 text-sm tracking-wider">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="text-foreground/80 transition-colors hover:text-foreground">
+                  <a
+                    href={item.href}
+                    className="text-foreground/80 transition-colors hover:text-foreground"
+                  >
                     {item.label}
                   </a>
                 </li>
@@ -23,7 +26,7 @@ export function SiteHeader() {
             href="#contact"
             className="text-sm tracking-wider underline underline-offset-4 md:hidden"
           >
-            お問い合わせ
+            お問い合わせaa
           </a>
           <a
             href={siteConfig.instagram.url}
@@ -37,5 +40,5 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -4,11 +4,13 @@ on:
   # 1. GitHubへのpush時
   push:
     branches:
-      - "**"
-      # 2. 手動実行
+      - main
+      - develop
+
+  # 2. 手動実行
   workflow_dispatch:
 
-    # 3. microCMSのWebhookからの呼び出し（repository_dispatch）
+  # 3. microCMSのWebhookからの呼び出し（repository_dispatch）
   repository_dispatch:
     types: [microcms-update]
 
@@ -23,6 +25,9 @@ jobs:
   build:
     name: Type check and build
     runs-on: ubuntu-latest
+    env:
+      MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -47,13 +52,14 @@ jobs:
 
   deploy:
     name: Deploy to Vercel
-    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+      MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -73,11 +79,18 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Pull Vercel project settings
-        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      # mainブランチ / Webhook / 手動実行 → Production（本番）
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch'
+        run: |
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
 
-      - name: Build for production
-        run: vercel build --prod --token="$VERCEL_TOKEN"
-
-      - name: Deploy to production
-        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      # developブランチ → Preview（開発確認用）
+      - name: Deploy to Preview
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          vercel build --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --token="$VERCEL_TOKEN"

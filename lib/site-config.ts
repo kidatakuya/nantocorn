@@ -20,6 +20,33 @@ export const siteConfig = {
   },
 };
 
+const configuredSiteUrl = process.env.SITE_URL?.trim();
+
+if (configuredSiteUrl) {
+  let parsedSiteUrl: URL;
+
+  try {
+    parsedSiteUrl = new URL(configuredSiteUrl);
+  } catch {
+    throw new Error("SITE_URL must be an absolute HTTP(S) URL.");
+  }
+
+  if (
+    !["http:", "https:"].includes(parsedSiteUrl.protocol) ||
+    parsedSiteUrl.pathname !== "/" ||
+    parsedSiteUrl.search ||
+    parsedSiteUrl.hash ||
+    parsedSiteUrl.username ||
+    parsedSiteUrl.password
+  ) {
+    throw new Error(
+      "SITE_URL must be an origin only, such as https://example.com.",
+    );
+  }
+}
+
+export const siteUrl = configuredSiteUrl ? new URL(configuredSiteUrl) : undefined;
+
 export const navItems = [
   { label: "想い", href: "/#about" },
   { label: "作物", href: "/#crops" },

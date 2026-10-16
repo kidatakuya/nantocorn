@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/site/json-ld";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getBlogPost } from "@/lib/blog-posts";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, siteUrl } from "@/lib/site-config";
 
 type BlogDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -22,8 +23,30 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} | ${siteConfig.name}`,
+    title: post.title,
     description: post.excerpt,
+    alternates: siteUrl
+      ? { canonical: `/blog/${encodeURIComponent(post.slug)}` }
+      : undefined,
+    openGraph: {
+      type: "article",
+      siteName: siteConfig.name,
+      title: post.title,
+      description: post.excerpt,
+      url: siteUrl
+        ? new URL(`/blog/${encodeURIComponent(post.slug)}`, siteUrl).toString()
+        : undefined,
+      publishedTime: post.dateTime,
+      ...(post.eyecatch && {
+        images: [post.eyecatch.url],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      ...(post.eyecatch && { images: [post.eyecatch.url] }),
+    },
   };
 }
 
@@ -38,6 +61,37 @@ export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
   return (
     <>
       <SiteHeader />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.dateTime,
+          inLanguage: "ja",
+          articleSection: post.category || undefined,
+          mainEntityOfPage: siteUrl
+            ? new URL(
+                `/blog/${encodeURIComponent(post.slug)}`,
+                siteUrl,
+              ).toString()
+            : undefined,
+          image: post.eyecatch?.url,
+          author: {
+            "@type": "Organization",
+            name: siteConfig.name,
+            url: siteUrl?.toString(),
+          },
+          publisher: {
+            "@type": "Organization",
+            name: siteConfig.name,
+            url: siteUrl?.toString(),
+            logo: siteUrl
+              ? new URL(siteConfig.logo.src, siteUrl).toString()
+              : undefined,
+          },
+        }}
+      />
       <main className="min-h-[60vh]">
         <article className="mx-auto max-w-3xl px-6 py-20 md:py-28">
           <Link

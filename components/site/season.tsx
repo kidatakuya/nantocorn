@@ -7,7 +7,7 @@ const crops = [
   { name: "とうもろこし", months: [4, 5, 6, 7, 8], className: "bg-accent" },
   {
     name: "玉ねぎ",
-    months: [9, 10, 11, 12, 1, 2, 3, 4],
+    months: [9, 10, 11, 12, 1, 2, 3, 4, 5],
     className: "bg-primary",
   },
 ];

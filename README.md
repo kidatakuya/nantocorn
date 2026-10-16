@@ -19,6 +19,7 @@
 - Next.js 16 + App Router を使った静的/動的ページ構成
 - Tailwind CSS によるデザイン
 - MicroCMS からブログ記事を取得して表示
+- SEO メタデータ、canonical URL、robots.txt、sitemap.xml、JSON-LD 構造化データ
 - 収穫時期の月別カレンダー表示
 - Instagram / メール / 所在地の連絡先表示
 - Vercel Analytics の組み込み
@@ -85,9 +86,11 @@ cp .env.example .env.local
 
 ```env
 MICROCMS_API_KEY=your_microcms_api_key
+SITE_URL=https://your-production-domain.example
 ```
 
 `lib/blog-posts.ts` では `serviceDomain: 'nantocorn'` を使用しているため、MicroCMS のサービスドメインが異なる場合は合わせて変更してください。
+本番では `SITE_URL` に公開サイトのオリジン（例: `https://example.jp`）を設定してください。canonical URL、OGP URL、構造化データ、sitemap の生成に使います。Vercel の本番環境変数にも登録してください。
 
 ## 開発サーバー起動
 

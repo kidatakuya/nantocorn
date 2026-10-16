@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { BlogPostList } from '@/components/site/blog-post-list'
+import { siteConfig, siteUrl } from '@/lib/site-config'
 import { SiteFooter } from '@/components/site/site-footer'
 import { SiteHeader } from '@/components/site/site-header'
 import { getAllBlogPosts } from '@/lib/blog-posts'
@@ -7,8 +8,16 @@ import { getAllBlogPosts } from '@/lib/blog-posts'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: '畑だより | 〇〇農園',
-  description: '〇〇農園の畑の様子や、作物のおいしい食べ方をお届けします。',
+  title: '畑だより',
+  description: `${siteConfig.name}の畑の様子や、作物のおいしい食べ方をお届けします。`,
+  alternates: siteUrl ? { canonical: '/blog' } : undefined,
+  openGraph: {
+    type: 'website',
+    siteName: siteConfig.name,
+    title: '畑だより',
+    description: `${siteConfig.name}の畑の様子や、作物のおいしい食べ方をお届けします。`,
+    url: siteUrl ? new URL('/blog', siteUrl).toString() : undefined,
+  },
 }
 
 export default async function BlogPage() {
